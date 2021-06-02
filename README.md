@@ -37,22 +37,9 @@ All things considered, this approach was problematic, as the definition of "walk
 For each vertex, the adjacent nodes are traversed until a certain depth(k) to check cycle existence.
 With this algorithm, the node at the depth limit will be treated as if it has no further successors so that traversing further down the graph is avoided if the cycle length threshold is reached. As this will be pruning the adjacency search, we anticipate a significant reduction in runtime.
 
+#### Pseudocode
+<img width="861" alt="Screen Shot 2021-06-02 at 14 32 29" src="https://user-images.githubusercontent.com/48694043/120473204-72581380-c3af-11eb-8062-e9fe08f00154.png">
 
-algorithm returning vector of cycle paths						
-recursive_paths(start_node, caller_node, length,max_length))
-
-If(length == max_length) 
-  If(start_node!=caller_node)
-    return;
-   else 
-     path_list.push_back(path);
-     return;
-  
- path.push_back(caller_node);
- for adj vertices of each vertex 
-  in new_caller=adj[i]
-  if(new_caller not found in path: 
-    call recursive_paths with length+1
               
    
 
