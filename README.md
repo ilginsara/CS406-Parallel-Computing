@@ -6,7 +6,7 @@ Ilgın Şara Hacipoğlu & Buse Ak
 ## 1.Introduction and Problem Description
 ![Screen-Shot-2018-08-21-at-7 17 58-PM](https://user-images.githubusercontent.com/48694043/120443243-1c737380-c38f-11eb-9b17-3ffb39c7d869.png)
 
-The problem is finding the number of length k cycles containing the vertex u for each u in vertex set V, given an undirected graph G=(V,E), and a positive integer 2<k<6. If the length k is taken as an input and not known because of it, the problem becomes NP-complete but in this project, the cycle length k is given, so the problem can be solved in either O(VE) time. 
+The problem is finding the number of length k cycles containing the vertex u for each u in vertex set V, given an undirected graph G=(V,E), and a positive integer 2<k<6. If the length k is taken as an input and not known because of it, the problem becomes NP-complete but in this project, the cycle length k is given, so the problem can be solved in O(VE) time. 
 
 For example with the graph example given above, when k=4 input is given the program will find the cycle 3-4-5-6-3 and increment the 4 length-cycle count for each of the vertices u in the given path, similarly when k=3 is given as input the found cycle will be 11-12-13-11 and program will increment cycle count for each of the respective vertices present in the path. 
 
@@ -28,5 +28,14 @@ The general approach with this algorithm is to use a DFS algorithm to mark all v
 ### 3.3 Powers of Adjacency Matrix 
 
 <img width="1022" alt="Screen Shot 2021-06-02 at 12 27 42" src="https://user-images.githubusercontent.com/48694043/120456211-0e791f00-c39e-11eb-9ce0-fd0e48a1c700.png">
-Given an adjacency matrix A, A^k matrix provides count of number of length k walks between vertices i->j in directed graphs. We tried to utilize 
+Given an adjacency matrix A, A^k matrix provides count of number of length k walks between vertices i->j in directed graphs. We tried to utilize this idea such that diagonals of A^k give walks of length k each vertex i is included in (starts in i ends in i). This approach seemed very viable initially, as we thought we could directly compute a matrix-matrix multiplication k times in parallel using the CRS structure efficiently. Matrix multiplications are in fact easier to parallelize than recursive algorithms like DFS however could also be very memory intensive, creating yet again a bottleneck. 
+
+All things considered, this approach was problematic, as the definition of "walk" of k length from same vertex i to i does not necessarily imply a cycle as a walk can backtrack to a previously visited node via an already used edge. Some trial efforts with smaller graphs yielded wrong results so we moved away from this approach as well. 
+
+
+
+
+
+
+
 
