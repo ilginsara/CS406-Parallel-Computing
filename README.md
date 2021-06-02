@@ -41,8 +41,7 @@ With this algorithm, the node at the depth limit will be treated as if it has no
 ** algorithm returning vector of cycle paths	**								
 recursive_paths(start_node, caller_node, length,max_length))
 
-//recursion check
-If(length == max_length) // no cycle found
+If(length == max_length) 
   If(start_node!=caller_node)
     return;
    else //cycle found
@@ -50,10 +49,10 @@ If(length == max_length) // no cycle found
      return;
   
  path.push_back(caller_node);
- for adj vertices of each vertex //traverse adj of each vertex
+ for adj vertices of each vertex 
   in new_caller=adj[i]
   if(new_caller not found in path: 
-    call recursive_paths //pass length+1 inside
+    call recursive_paths with length+1
               
    
 
