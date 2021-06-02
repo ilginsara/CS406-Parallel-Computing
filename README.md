@@ -44,7 +44,7 @@ recursive_paths(start_node, caller_node, length,max_length))
 If(length == max_length) 
   If(start_node!=caller_node)
     return;
-   else //cycle found
+   else 
      path_list.push_back(path);
      return;
   
