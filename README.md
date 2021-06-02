@@ -38,7 +38,7 @@ For each vertex, the adjacent nodes are traversed until a certain depth(k) to ch
 With this algorithm, the node at the depth limit will be treated as if it has no further successors so that traversing further down the graph is avoided if the cycle length threshold is reached. As this will be pruning the adjacency search, we anticipate a significant reduction in runtime.
 
 
-** algorithm returning vector of cycle paths	**								
+algorithm returning vector of cycle paths						
 recursive_paths(start_node, caller_node, length,max_length))
 
 If(length == max_length) 
