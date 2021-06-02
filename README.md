@@ -18,7 +18,7 @@ CRS uses to arrays; first array known as the adj array holds all the contents of
 
 If xadj[i]= k and xadj[i+1]=k+3 for instance, it implies that there is an edge from vertex i to all vertices stored in adj array starting from adj[k] to adj[k+2].
 
-## 3. Other Attempted Solutions and Solution Description 
+## 3. Other Attempted Solutions  
 ### 3.1 General BFS Approach (Breadth-First Search)
 There are 3 main BFS approaches known as Top-down, Bottom-up and Hybrid heuristic, where Bottom-Up and Top-down approaches are combined based on vertex count in a specific frontier. Nodes in the same level are pushed into a frontier and upon iteration over those present in the frontier, next frontier is created for the upcoming levels. One drawback of BFS algorithm is that each frontier of the tree needs to be saved into memory to expand into the next levels. This will require significant time, especially if cycles are located farther down the graph as the algorithm will need to proceed into much lower levels and might even need to traverse the entire graph. Although literature search suggests that a general BFS algorithm is more suitable for parallelization than a general DFS, given the nature of the problem and graph sizes, it did not appear feasible to continue with this approach. 
 
@@ -33,17 +33,33 @@ Given an adjacency matrix A, A^k matrix provides count of number of length k wal
 All things considered, this approach was problematic, as the definition of "walk" of k length from same vertex i to i does not necessarily imply a cycle as a walk can backtrack to a previously visited node via an already used edge. Some trial efforts with smaller graphs yielded wrong results so we moved away from this approach as well. 
 
 
-### 3.4 Our Approach: Depth-Limited Search
+## 4. Our Approach: Depth-Limited Search
 For each vertex, the adjacent nodes are traversed until a certain depth(k) to check cycle existence.
 With this algorithm, the node at the depth limit will be treated as if it has no further successors so that traversing further down the graph is avoided if the cycle length threshold is reached. As this will be pruning the adjacency search, we anticipate a significant reduction in runtime.
-A recursive DFS based algorithm updates a 2D vertex called path_list holding all discorevered paths for each vertex. The vertex started is stored as start node and does not change until all cycles are explored for a given vertex. Calling node is updated whenever an edge sharing node calls the recursive function again. When the caller and start node are eventually same, which implies a cycle of given length, pathlist is updated with the path of found cycle. In main level, this function is called for each vertex present in the xadj array and the procedure is parallelized with a pragma omp for statement. Scheduling for threads is done dynamically, as the adjacency matrix of the graphs are sparse, we anticipate the workload of each thread is not uniform and dynamic scheduling allows threads that had less work in an iteration to take on more work as soon as they finish. 
+
+A recursive DFS based algorithm updates a 2D vertex called path_list holding all discorevered paths for each vertex. The vertex started is stored as start node and does not change until all cycles are explored for a given vertex. Calling node is updated whenever an edge sharing node calls the recursive function again. In order to ensure a node does not call its edge sharing node which has already been visited, we traverse the path. As the path length is small, because it is limited to input k which will be at most 5, this search operation does not have much detrimental effect. If the parameter k was much higher though, this approach would not be efficient as the operation cost would increase in the order of O(log n). 
+
+When the caller and start node are eventually same, which implies a cycle of given length, pathlist is updated with the path of found cycle. In main level, this function is called for each vertex present in the xadj array and the procedure is parallelized with a pragma omp for statement. Scheduling for threads is done dynamically, as the adjacency matrix of the graphs are sparse, we anticipate the workload of each thread is not uniform and dynamic scheduling allows threads that had less work in an iteration to take on more work as soon as they finish. 
 
 #### Pseudocode
 <img width="861" alt="Screen Shot 2021-06-02 at 14 32 29" src="https://user-images.githubusercontent.com/48694043/120473204-72581380-c3af-11eb-8062-e9fe08f00154.png">
 
               
-   
+## 5. Multi-Core CPU Results
+The biggest drawback with our approach was that the results get slower as the cycle length parameter k grows. While the runtime difference between k=3 and k=4 is not as significant, when k=5 the results are significantly slower as algorithm needs to explore more vertices further down the graph, going deeper in DFS fashion. 
 
+### Cycle length 3
 
+| Threads  | Runtime  | Speedup | Efficiency |
+| ------------- | ------------- | ------------- |
+| 1 | 12.52 | -  | -  |
+| 4 | 4.05 | 3.09 | 0.77  |
+| 8  | 2.01  | 6.22 | 0.77 |
+| 16 | 1.01 | 12.39  | 0.77  |
+| 32  | 0.52  | 24.07  | 0.75|
+| 64  | 0.33 | 37.93  | 0.59 |
+| 128  | 0.32  | 39.12  | 0.30 |
+| 256  | 0.33  | 37.93 | 0.14 |
+| 512  | 0.35  | 35.77  | 0.06 |
 
 
