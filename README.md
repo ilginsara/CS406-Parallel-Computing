@@ -1,3 +1,3 @@
 # CS406-Parallel-Computing
-###Course Project for CS406
+##Course Project for CS406
 
