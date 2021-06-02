@@ -81,3 +81,12 @@ The biggest drawback with our approach was that the results get slower as the cy
 
 
 As can be observed from results above, the sequential runtime of the algorithm increases significantly as k increases. Another observation is that the sequential algorithm itself is most likely not an optimal solution, thus yielding a high sequential runtime. Because it is not optimal, the speedup achieved with threads are high, for instance 30-40 fold speedup was observed in some cases. On the other hand, a thread number of 32 appears to yield the best performance, as both speedup and efficiency were observed to decrease with 128 threads and more. The parallel program scaling is well up to 64 threads, however it does not scale well after that. 
+
+## How to Run
+Programming language used is C++ along with OpenMP interface. OpenMP and Gcc 7.5.0 has to be installed before building. 
+
+```
+g++ ./cpu_parallel.cpp -O3 -fopenmp
+./a. amazon.txt 3 
+```
+where the first parameter is the input graph and second is the cycle length. User then will be prompted to enter desired thread numbers. To see the results, the commented section in main where it says 'TO CHECK OUTPUT' needs to be uncommented, otherwise results will not be printed, only the run-time will be displayed. 
