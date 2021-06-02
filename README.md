@@ -77,7 +77,8 @@ The biggest drawback with our approach was that the results get slower as the cy
 
 
 ![unknown](https://user-images.githubusercontent.com/48694043/120480398-a8999100-c3b7-11eb-9388-0afb691aa395.png)
-<img width="406" alt="Screen Shot 2021-06-02 at 16 10 43" src="https://user-images.githubusercontent.com/48694043/120485845-28762a00-c3bd-11eb-9592-6847980ead12.png">
+<img width="406" alt="Screen Shot 2021-06-02 at 16 10 43" src="https://user-images.githubusercontent.com/48694043/120486767-0335eb80-c3be-11eb-80ad-880ef4fa76e8.png">
+
 
 
 
