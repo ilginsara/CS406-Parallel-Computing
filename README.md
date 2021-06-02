@@ -33,8 +33,29 @@ Given an adjacency matrix A, A^k matrix provides count of number of length k wal
 All things considered, this approach was problematic, as the definition of "walk" of k length from same vertex i to i does not necessarily imply a cycle as a walk can backtrack to a previously visited node via an already used edge. Some trial efforts with smaller graphs yielded wrong results so we moved away from this approach as well. 
 
 
+### 3.4 Our Approach: Depth-Limited Search
+For each vertex, the adjacent nodes are traversed until a certain depth(k) to check cycle existence.
+With this algorithm, the node at the depth limit will be treated as if it has no further successors so that traversing further down the graph is avoided if the cycle length threshold is reached. As this will be pruning the adjacency search, we anticipate a significant reduction in runtime.
 
 
+** algorithm returning vector of cycle paths	**								
+recursive_paths(start_node, caller_node, length,max_length))
+
+//recursion check
+If(length == max_length) // no cycle found
+  If(start_node!=caller_node)
+    return;
+   else //cycle found
+     path_list.push_back(path);
+     return;
+  
+ path.push_back(caller_node);
+ for adj vertices of each vertex //traverse adj of each vertex
+  in new_caller=adj[i]
+  if(new_caller not found in path: 
+    call recursive_paths //pass length+1 inside
+              
+   
 
 
 
