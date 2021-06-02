@@ -28,5 +28,5 @@ The general approach with this algorithm is to use a DFS algorithm to mark all v
 ### 3.3 Powers of Adjacency Matrix 
 
 <img width="1022" alt="Screen Shot 2021-06-02 at 12 27 42" src="https://user-images.githubusercontent.com/48694043/120456211-0e791f00-c39e-11eb-9ce0-fd0e48a1c700.png">
-
+Given an adjacency matrix A, A^k matrix provides count of number of length k walks between vertices i->j in directed graphs. We tried to utilize 
 
