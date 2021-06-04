@@ -142,10 +142,11 @@ int main(int argc, char *argv[])
     double end=omp_get_wtime();
     //TO CHECK OUTPUT
     //please replace 100 with num_vertices
-        
+        /*
      for(int a=0; a<=100;a++){
       cout<<a<<" "<<length_cyles[a]<<endl;
 	}
+	*/
     
     cout<<"No threads: "<<nt<<" Time: "<<end-start<<endl;
     return 0;
